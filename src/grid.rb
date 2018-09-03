@@ -2,8 +2,8 @@
 require_relative 'cell'
 
 # Grid size
-width = 10
-height = 10
+width = 20
+height = 20
 
 top_border = '+   +' + '---+' * (width - 1)
 # Create 2d array of all horizontal walls and set to true
@@ -19,10 +19,10 @@ horiz_walls[7][1] = false
 player = { x: 0, y: 0 }
 
 puts top_border
-for row in 0...(height)
+for row in 0...height
   # Print vertical walls
   print '|' # Leftside border
-  for col in 0...(width)
+  for col in 0...width
     # Add player symbol
     if col == player[:x] && row == player[:y]
       print vert_walls[row][col] ? ' * |' : ' *  '
@@ -32,7 +32,7 @@ for row in 0...(height)
   end
   print "\n+" # Rightside border
   # Print horizontal walls
-  for col in 0...(width)
+  for col in 0...width
     print horiz_walls[row][col] ? '---+' : '   +'
   end
   print "\n"
