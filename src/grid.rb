@@ -2,11 +2,11 @@
 require_relative 'cell'
 
 # Grid size
-width = 20
-height = 20
+width = 10
+height = 10
 
 top_border = '+   +' + '---+' * (width - 1)
-# Create 2d array of all horizontal walls and set to true
+# Create 2d array of all horizontal walls and set all to true
 horiz_walls = Array.new(width) { Array.new(height) { true } }
 # Same for vertical walls...
 vert_walls = Array.new(width) { Array.new(height) { true } }
