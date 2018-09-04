@@ -1,5 +1,5 @@
-# Print grid to screen
 require_relative 'cell'
+# Class used to create new maze
 class Maze
   attr_accessor :width, :height, :cells
   def initialize(width = 10, height = 10)
@@ -12,11 +12,12 @@ class Maze
     generate_maze
   end
 
+  # Makes the maze into a string so that it can be printed etc
   def to_s(player)
-    # Top Border
+    # Add top Border
     output = '+   +' + '---+' * (@width - 1) + "\n"
     for row in 0...@height
-      # Print vertical walls
+      # Add vertical walls
       output += '|' # Leftside border
       for col in 0...@width
         # Add player symbol
@@ -27,7 +28,7 @@ class Maze
         end
       end
       output += "\n+" # Rightside border
-      # Print horizontal walls
+      # Add horizontal walls
       for col in 0...@width
         output += @horiz_walls[col][row] ? '---+' : '   +'
       end
@@ -36,9 +37,9 @@ class Maze
     output
   end
 
+  # Generates a new maze starting from pos 0, 0
   def generate_maze
     # Put starting cell onto stack
-    @done = false
     @stack << @cells[0][0]
     create_path_from(0, 0)
   end
@@ -54,6 +55,7 @@ class Maze
     # puts "X: #{@cells[x][y].x}, Y: #{@cells[x][y].y}"
     # puts "X: #{x}, Y: #{y}"
     # p choices
+    # Return to previous cell if all surrounding cells have been visited
     if choices.length == 0
       # puts "here"
       prev_cell = @stack.pop
@@ -125,6 +127,7 @@ class Maze
     end
   end
 
+  # Returns available choices based on if they have been visited yet
   def get_choices(x, y)
     choices = []
     # Check north cell
@@ -154,11 +157,13 @@ class Maze
     choices
   end
 
+  # Creates 2d array for each cell width * height (x, y)
   def create_cells
-    # 2 dimensional array rows * columns [x][y] of new cells
+    # Make empty array
     @cells = Array.new(@width) { Array.new(@height) }
     for x in 0...@width
       for y in 0...@height
+        # Put new cell in each element of array
         @cells[x][y] = Cell.new(x, y)
       end
     end
