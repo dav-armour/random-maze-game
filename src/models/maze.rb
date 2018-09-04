@@ -5,11 +5,11 @@ class Maze
   def initialize (width = 10, height = 10)
     @width = width
     @height = height
-    @player = { x: 8, y: 2 }
+    # @player = { x: 8, y: 2 }
     create_walls
   end
 
-  def to_s
+  def to_s(player)
     # Top Border
     output = '+   +' + '---+' * (@width - 1) + "\n"
     for row in 0...@height
@@ -17,16 +17,16 @@ class Maze
       output += '|' # Leftside border
       for col in 0...@width
         # Add player symbol
-        if col == @player[:x] && row == @player[:y]
-          output += @vert_walls[row][col] ? ' * |' : ' *  '
+        if col == player.xpos && row == player.ypos
+          output += @vert_walls[col][row] ? ' * |' : ' *  '
         else
-          output += @vert_walls[row][col] ? '   |' : '    '
+          output += @vert_walls[col][row] ? '   |' : '    '
         end
       end
       output += "\n+" # Rightside border
       # Print horizontal walls
       for col in 0...@width
-        output += @horiz_walls[row][col] ? '---+' : '   +'
+        output += @horiz_walls[col][row] ? '---+' : '   +'
       end
       output += "\n"
     end
@@ -34,9 +34,10 @@ class Maze
   end
 
   def create_cells
-    cells_2d_array = Array.new(width - 1) { Array.new(@height - 1) }
-    cells_2d_array.each do |row_arr|
-    row_arr.map! { |c| c = Cell.new }
+    # 2 dimensional array rows * columns [x][y]
+    @cells = Array.new(width) { Array.new(@height) }
+    @cells.each do |row_arr|
+      row_arr.map! { |c| c = Cell.new }
     end
   end
 
