@@ -28,6 +28,7 @@ class Game
     end
 
     case char
+    # Makes keys move player
     when 'w', "\e[A"
       @player.move_north(@maze)
       false
