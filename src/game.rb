@@ -5,8 +5,7 @@ require_relative 'models/maze'
 
 class Game
   def run
-    @maze = Maze.new
-    @maze.generate_maze
+    @maze = Maze.new(20,10)
     @player = Player.new
     while true
       system 'clear'
@@ -29,7 +28,7 @@ class Game
     end
 
     case char
-    # Makes keys move player
+    # Makes wasd and arrow keys move player
     when 'w', "\e[A"
       @player.move_north(@maze)
       false
@@ -42,8 +41,10 @@ class Game
     when 'a', "\e[D"
       @player.move_west(@maze)
       false
+    # Exit game
     when 'q'
       true
+    # Ctrl - C to exit game
     when "\u0003"
       exit
     else
