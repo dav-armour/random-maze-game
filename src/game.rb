@@ -6,6 +6,7 @@ require_relative 'models/maze'
 class Game
   def run
     @maze = Maze.new
+    @maze.generate_maze
     @player = Player.new
     while true
       system 'clear'

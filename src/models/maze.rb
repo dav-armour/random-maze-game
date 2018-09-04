@@ -10,6 +10,7 @@ class Maze
     create_cells
     # Empty stack used for maze creation
     @stack = []
+    @done = false
   end
 
   def to_s(player)
@@ -37,29 +38,96 @@ class Maze
   end
 
   def generate_maze
+    # Put starting cell onto stack
+    @done = false
+    @stack << @cells[0][0]
     create_path_from(0, 0)
   end
 
   def create_path_from(x, y)
     # Mark current cell as visited
+    if @stack.length == 0 || @done == true
+      # puts "exiting"
+      @done = true
+      return
+    end
+    # puts "going"
     @cells[x][y].visited = true
     choices = get_choices(x, y)
+    # puts "X: #{@cells[x][y].x}, Y: #{@cells[x][y].y}"
+    # puts "X: #{x}, Y: #{y}"
+    # p choices
+    if choices.length == 0
+      # puts "here"
+      # if @stack.length == 0
+      #   return
+      #   # return
+      # end
+      prev_cell = @stack.pop
+      new_x = prev_cell.x
+      new_y = prev_cell.y
+      create_path_from(new_x, new_y)
+    end
+    choice = choices[rand(choices.length)]
+    # p choice
+    new_x, new_y = get_next_cell_pos(choice, x, y)
+    @cells[x][y].available_directions << choice
+    @cells[new_x][new_y].available_directions << opposite(choice)
+    @stack << @cells[x][y]
+    # Remove wall between current cell and chosen cell
+    remove_wall(x, y, choice)
+    # Restart method with new position
+    # puts "here"
+    create_path_from(new_x, new_y)
+  end
 
-    # choices
+  def remove_wall(x, y, choice)
+    # p choice
+    # puts "Pos-: #{x}, #{y}"
+    case choice
+    when "N"
+      # puts "removing wall @ pos: #{x},#{y-1}"
+      @horiz_walls[x][y-1] = false
+    when "S"
+      # puts "removing wall @ pos: #{x},#{y}"
+      @horiz_walls[x][y] = false
+    when "E"
+      # puts "removing wall @ pos: #{x},#{y}"
+      @vert_walls[x][y] = false
+    when "W"
+      # puts "removing wall @ pos: #{x-1},#{y}"
+      @vert_walls[x-1][y] = false
+    end
+  end
 
-    #
-    #   choices = unvisited surrounding cells
-    #   if no choices:
-    #     if stack empty:
-    #       MAZE DONE
-    #     set x, y to previous cell (pop from stack)
-    #     restart method
-    #   randomly choose one cell from choices
-    #   set x, y = chosen cell
-    #   add chosen direction to current cell's available directions
-    #   push current cell onto stack
-    #   remove wall between current cell and chosen cell
-    #   restart method
+  def get_next_cell_pos(choice, x, y)
+    # puts "OLD: X: #{x}, OLD Y: #{y}"
+    # p choice
+    case choice
+    when "N"
+      y -= 1
+    when "S"
+      y += 1
+    when "E"
+      x += 1
+    when "W"
+      x -= 1
+    end
+    # puts "New: X: #{x}, New Y: #{y}"
+    [x, y]
+  end
+
+  def opposite(choice)
+    case choice
+    when "N"
+      "S"
+    when "S"
+      "N"
+    when "E"
+      "W"
+    when "W"
+      "E"
+    end
   end
 
   def get_choices(x, y)
@@ -95,7 +163,12 @@ class Maze
 
   def create_cells
     # 2 dimensional array rows * columns [x][y] of new cells
-    @cells = Array.new(width) { Array.new(@height) { Cell.new } }
+    @cells = Array.new(@width) { Array.new(@height) }
+    for x in 0...@width
+      for y in 0...@height
+        @cells[x][y] = Cell.new(x, y)
+      end
+    end
     # p @cells
   end
 
@@ -107,8 +180,8 @@ class Maze
     # Remove finish wall
     @horiz_walls[-1][-1] = false
     # Remove walls for testing
-    @vert_walls[5][7] = false
-    @horiz_walls[7][1] = false
+    # @vert_walls[5][7] = false
+    # @horiz_walls[7][1] = false
   end
 
 end

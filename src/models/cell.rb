@@ -1,6 +1,8 @@
 class Cell
   attr_accessor :available_directions, :visited, :x, :y
-  def initialize
+  def initialize(x, y)
+    @x = x
+    @y = y
     # Available movement directions N,S,E,W
     @available_directions = []
     # Keep track for maze creation
