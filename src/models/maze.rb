@@ -5,11 +5,11 @@ class Maze
   def initialize (width = 10, height = 10)
     @width = width
     @height = height
-    @player = { x: 8, y: 2 }
+    # @player = { x: 8, y: 2 }
     create_walls
   end
 
-  def to_s
+  def to_s(player)
     # Top Border
     output = '+   +' + '---+' * (@width - 1) + "\n"
     for row in 0...@height
@@ -17,7 +17,7 @@ class Maze
       output += '|' # Leftside border
       for col in 0...@width
         # Add player symbol
-        if col == @player[:x] && row == @player[:y]
+        if col == player.xpos && row == player.ypos
           output += @vert_walls[col][row] ? ' * |' : ' *  '
         else
           output += @vert_walls[col][row] ? '   |' : '    '

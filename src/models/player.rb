@@ -6,19 +6,19 @@ class Player
     @ypos = 0
   end
 
-  def move_north
+  def move_north(maze)
     @ypos -= 1 unless @ypos == 0
   end
 
-  def move_south
-    @ypos += 1 unless @ypos == 10 #Fixme
+  def move_south(maze)
+    @ypos += 1 unless @ypos == maze.height - 1 #Fixme
   end
 
-  def move_east
-    @xpos += 1 unless @xpos == 10 #Fixme
+  def move_east(maze)
+    @xpos += 1 unless @xpos == maze.width - 1 #Fixme
   end
 
-  def move_west
+  def move_west(maze)
     @xpos -= 1 unless @xpos == 0 #Fixme
   end
 end
