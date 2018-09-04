@@ -5,11 +5,10 @@ class Maze
   def initialize(width = 10, height = 10)
     @width = width
     @height = height
-    # @player = { x: 8, y: 2 }
-    create_walls
-    create_cells
     # Empty stack used for maze creation
     @stack = []
+    create_walls
+    create_cells
     generate_maze
   end
 
@@ -21,7 +20,7 @@ class Maze
       output += '|' # Leftside border
       for col in 0...@width
         # Add player symbol
-        if col == player.xpos && row == player.ypos
+        if col == player.x && row == player.y
           output += @vert_walls[col][row] ? ' * |' : ' *  '
         else
           output += @vert_walls[col][row] ? '   |' : '    '
