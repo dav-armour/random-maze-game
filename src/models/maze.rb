@@ -10,7 +10,7 @@ class Maze
     create_cells
     # Empty stack used for maze creation
     @stack = []
-    @done = false
+    generate_maze
   end
 
   def to_s(player)
@@ -44,14 +44,12 @@ class Maze
     create_path_from(0, 0)
   end
 
+  private
+
   def create_path_from(x, y)
+    # Maze done when stack is empty
+    return if @stack.empty?
     # Mark current cell as visited
-    if @stack.length == 0 || @done == true
-      # puts "exiting"
-      @done = true
-      return
-    end
-    # puts "going"
     @cells[x][y].visited = true
     choices = get_choices(x, y)
     # puts "X: #{@cells[x][y].x}, Y: #{@cells[x][y].y}"
@@ -59,26 +57,24 @@ class Maze
     # p choices
     if choices.length == 0
       # puts "here"
-      # if @stack.length == 0
-      #   return
-      #   # return
-      # end
       prev_cell = @stack.pop
-      new_x = prev_cell.x
-      new_y = prev_cell.y
+      create_path_from(prev_cell.x, prev_cell.y)
+    else
+      # Randomly choose direction
+      choice = choices[rand(choices.length)]
+      # p choice
+      new_x, new_y = get_next_cell_pos(choice, x, y)
+      # Tell current cell and new cell they can now move in chosen direction
+      @cells[x][y].available_directions << choice
+      @cells[new_x][new_y].available_directions << opposite(choice)
+      # Push current cell onto stack
+      @stack << @cells[x][y]
+      # Remove wall between current cell and chosen cell
+      remove_wall(x, y, choice)
+      # puts "here"
+      # Restart method with new position
       create_path_from(new_x, new_y)
     end
-    choice = choices[rand(choices.length)]
-    # p choice
-    new_x, new_y = get_next_cell_pos(choice, x, y)
-    @cells[x][y].available_directions << choice
-    @cells[new_x][new_y].available_directions << opposite(choice)
-    @stack << @cells[x][y]
-    # Remove wall between current cell and chosen cell
-    remove_wall(x, y, choice)
-    # Restart method with new position
-    # puts "here"
-    create_path_from(new_x, new_y)
   end
 
   def remove_wall(x, y, choice)
@@ -158,8 +154,6 @@ class Maze
     end
     choices
   end
-
-  private
 
   def create_cells
     # 2 dimensional array rows * columns [x][y] of new cells
