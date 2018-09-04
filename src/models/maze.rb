@@ -3,24 +3,13 @@ require_relative 'cell'
 class Maze
   attr_accessor :width, :height
   def initialize (width = 10, height = 10)
-    @width = 10
-    @height = 10
+    @width = width
+    @height = height
     @player = { x: 8, y: 2 }
+    create_walls
   end
 
-  def create_walls
-    # Create 2d array of all horizontal walls and set all to true
-    @horiz_walls = Array.new(@width) { Array.new(@height) { true } }
-    # Same for vertical walls...
-    @vert_walls = Array.new(@width) { Array.new(@height) { true } }
-    # Remove finish wall
-    @horiz_walls[-1][-1] = false
-    # Remove walls for testing
-    @vert_walls[5][7] = false
-    @horiz_walls[7][1] = false
-  end
-
-  def maze_to_s
+  def to_s
     # Top Border
     output = '+   +' + '---+' * (@width - 1) + "\n"
     for row in 0...@height
@@ -28,7 +17,7 @@ class Maze
       output += '|' # Leftside border
       for col in 0...@width
         # Add player symbol
-        if col == player[:x] && row == player[:y]
+        if col == @player[:x] && row == @player[:y]
           output += @vert_walls[row][col] ? ' * |' : ' *  '
         else
           output += @vert_walls[row][col] ? '   |' : '    '
@@ -44,10 +33,27 @@ class Maze
     output
   end
 
+  def create_cells
+    cells_2d_array = Array.new(width - 1) { Array.new(@height - 1) }
+    cells_2d_array.each do |row_arr|
+    row_arr.map! { |c| c = Cell.new }
+    end
+  end
+
+  private
+
+  def create_walls
+    # Create 2d array of all horizontal walls and set all to true
+    @horiz_walls = Array.new(@width) { Array.new(@height) { true } }
+    # Same for vertical walls...
+    @vert_walls = Array.new(@width) { Array.new(@height) { true } }
+    # Remove finish wall
+    @horiz_walls[-1][-1] = false
+    # Remove walls for testing
+    @vert_walls[5][7] = false
+    @horiz_walls[7][1] = false
+  end
+
 end
 
-# cells_2d_array = Array.new(width - 1) { Array.new(@height - 1) }
 
-# cells_2d_array.each do |row_arr|
-#   row_arr.map! { |c| c = Cell.new }
-# end
