@@ -43,6 +43,26 @@ class Maze
   def create_path_from(x, y)
     # Mark current cell as visited
     @cells[x][y].visited = true
+    choices = get_choices(x, y)
+
+    # choices
+
+    #
+    #   choices = unvisited surrounding cells
+    #   if no choices:
+    #     if stack empty:
+    #       MAZE DONE
+    #     set x, y to previous cell (pop from stack)
+    #     restart method
+    #   randomly choose one cell from choices
+    #   set x, y = chosen cell
+    #   add chosen direction to current cell's available directions
+    #   push current cell onto stack
+    #   remove wall between current cell and chosen cell
+    #   restart method
+  end
+
+  def get_choices(x, y)
     choices = []
     # Check north cell
     if y > 0
@@ -68,22 +88,7 @@ class Maze
         choices << 'W'
       end
     end
-
     choices
-
-    #
-    #   choices = unvisited surrounding cells
-    #   if no choices:
-    #     if stack empty:
-    #       MAZE DONE
-    #     set x, y to previous cell (pop from stack)
-    #     restart method
-    #   randomly choose one cell from choices
-    #   set x, y = chosen cell
-    #   add chosen direction to current cell's available directions
-    #   push current cell onto stack
-    #   remove wall between current cell and chosen cell
-    #   restart method
   end
 
   private
