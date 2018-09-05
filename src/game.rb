@@ -1,36 +1,46 @@
-# Main game file
+# Main application file that controls game logic
+# Requires rainbow gem (gem install rainbow)
 require 'io/console'
 require 'rainbow'
+# Project files
 require_relative 'models/player'
 require_relative 'models/maze'
 require_relative 'models/menu'
 
-
+# Game class controls how game is run
 class Game
-
   def initialize
+    # Hash used to store each menu object with associated menu name as key
     @menus = {}
+    # Create a new player
     @player = Player.new
+    # Create all game menus/screens
     create_menus
-    # system 'clear'
-    # @menus[:difficulty_menu].display_menu
-    # @menus[:result_menu].display_menu
-    # @menus[:maze_menu].display_menu
+
   end
 
+  # Starts the game
   def run
     system 'clear'
+    # Display first menu to select difficulty
     @menus[:difficulty_menu].display_menu
+    # Gets input from user and starts the chosen maze
     get_menu_input('difficulty')
   end
 
+  # Creates maze and shows result menu when finished
   def start_maze(difficulty)
-    puts "here"
+    # Create new maze of given difficulty
     @maze = Maze.new(difficulty)
+    # Store starting time: used to calculate maze completion time
     start_time = Time.now.to_i
+    # Main game loop. Ends when player reaches finish
     while true
+      # Maze gets redrawn after every movement. Need to clear screen
       system 'clear'
+      # Store current position to compare with end position
       position = [@player.x, @player.y]
+      # Calculate ending position x,y
       end_x = @maze.width - 1
       end_y = @maze.height - 1
       # Check if they have reached the finish
@@ -42,40 +52,54 @@ class Game
       end
       # Prints out maze with current player position
       print_maze
-      menu = get_maze_input
-
-      break if menu
-      # puts "Current position X: #{player.xpos}, Y: #{player.ypos}"
+      get_maze_input
     end
     end_time = Time.now.to_i
     time_taken = end_time - start_time
+    show_result(time_taken, difficulty)
+  end
+
+  # Shows result of time taken and score after maze finish
+  def show_result(time_taken, difficulty)
+    # Retrieve score based on time taken and difficulty
     score = get_score(time_taken, difficulty)
+    # Add text to result menu
     body_text = "Congratulations you finished the maze!\n-\n"
     body_text += "You made it throught the maze in #{time_taken} seconds!\n-\n"
     body_text += "Your score is #{score}!\n-"
     @menus[:result_menu].body[:text] = body_text
+    # Show result menu
     @menus[:result_menu].display_menu
+
     get_menu_input('result', difficulty)
   end
 
+  # Constant strings used for maze printing
+  LEFT_BORDER = Rainbow('|').green
+  RIGHT_BORDER = Rainbow("|\n").green
+  SPACER_LINE = Rainbow('|' + ' '.center(98) + '|').green
+
   # Print out maze with header and footer
   def print_maze
+    # Show header
     @menus[:maze_header].display_menu
-    print Rainbow('|').green
-    print Rainbow("Use arrow keys or WASD to move.".center(98)).blue
-    print Rainbow("|\n").green
-    puts Rainbow('|' + ' '.center(98) + '|').green
+    print LEFT_BORDER
+    print Rainbow("Use Arrow or WASD keys to move.".center(98)).blue
+    print RIGHT_BORDER
+    puts SPACER_LINE
+    # Loop through each line of maze so that we can center in game window and add color border
     @maze.to_s(@player).split("\n").each do |line|
-      print Rainbow('|').green
+      print LEFT_BORDER
       print line.center(98)
-      print Rainbow("|\n").green
+      print RIGHT_BORDER
     end
-    puts Rainbow('|' + ' '.center(98) + '|').green
+    puts SPACER_LINE
+    # Show footer
     @menus[:maze_footer].display_menu
   end
 
+  # Calculate score based on time taken
   def get_score(time_taken, difficulty)
-    #Calculate score
     case difficulty
     when :easy
       time_differnce =  20 - time_taken
@@ -84,13 +108,15 @@ class Game
     when :hard
       time_differnce =  40 - time_taken
     end
-    time_bonus = time_differnce <= 0 ? 0 : time_differnce * 50
-    time_bonus
+    # Make score 0 if player took too long to finish
+    time_differnce <= 0 ? 0 : time_differnce * 50
+    # Returns score
   end
 
+  # Controls what happens when each button is pressed at menus
   def get_menu_input(menu, cur_difficulty =  nil)
-    char = STDIN.getch
-    p char
+    # Get single character (without showing on screen)
+    char = STDIN.noecho(&:getch)
     case char
     when '1'
       menu == 'difficulty' ? start_maze(:easy) : start_maze(cur_difficulty)
@@ -98,16 +124,18 @@ class Game
       menu == 'difficulty' ? start_maze(:medium) : run
     when '3'
       menu == 'difficulty' ? start_maze(:hard) : exit
-    # Ctrl - C to exit game
-    when "\u0003", "q"
+    # Q or Ctrl - C to exit game
+    when "\u0003", "q", "Q"
       exit
+    # Repeat if unwanted button pressed
     else
-      get_menu_input(menu)
+      get_menu_input(menu, cur_difficulty)
     end
   end
 
-  def get_maze_input()
-    char = STDIN.getch
+  def get_maze_input
+    # Get single character (without showing on screen)
+    char = STDIN.noecho(&:getch)
     # Check if special character entered (arrow keys)
     if char == "\e"
       # Retrieve rest of special character
@@ -115,32 +143,28 @@ class Game
         char += STDIN.getch
       end
     end
-
+    # Check what key was entered
     case char
-      # Makes wasd and arrow keys move player
-    when 'w', "\e[A"
+    # Makes WASD and arrow keys move player
+    when 'w', "W", "\e[A" # Up arrow
       @player.move_north(@maze)
-      false
-    when 's', "\e[B"
+    when 's', "S", "\e[B" # Down arrow
       @player.move_south(@maze)
-      false
-    when 'd', "\e[C"
+    when 'd', "D", "\e[C" # Right arrow
       @player.move_east(@maze)
-      false
-    when 'a', "\e[D"
+    when 'a', "A", "\e[D" # Left arrow
       @player.move_west(@maze)
-      false
-      # Exit game
-    when 'm'
-      true
-      # Ctrl - C to exit game
-    when "\u0003", "q"
+    # Q or Ctrl - C to exit game
+    when "\u0003", "q", "Q"
       exit
+    # Repeat if unwanted button pressed
     else
-      false
+      get_maze_input
     end
   end
 
+  # Uses Menu Class to create all game menus that will be used
+  # Add all created menus to class variable @menus so they can be used throughout game
   def create_menus
     # Difficulty Menu
     header_text = 'Random Maze Game'
@@ -155,15 +179,9 @@ class Game
     @menus[:difficulty_menu] = difficulty_menu
 
     #Results Menu
-    body_text = "Congratulations you finished the maze!\n-\n"
-    body_text += "You made it throught the maze in 5 seconds!\n-\n"
-    body_text += "Your score is 300!\n-"
-    body_text += "\nPlease choose an option:\n"
+    body_text = "-" # Gets filled in later when player finishes maze
     body_choices = ['Restart Maze', 'Change Difficulty', 'Exit']
     body = {text: body_text, choices: body_choices, color: :white }
-    # body_text = "Congratulations you finished the maze.\n"
-    # body_text += "You made it throught the maze in #{time_taken} seconds!\n"
-    # body_text += "Your score is #{score}!"
     result_menu = Menu.new(width: 100, header: header, body: body, footer: footer)
     result_menu.border_color = :green
     @menus[:result_menu] = result_menu
@@ -177,7 +195,12 @@ class Game
     maze_footer.border_color = :green
     @menus[:maze_footer] = maze_footer
   end
-
 end
 
-Game.new.run
+# Starts game
+begin
+  Game.new.run
+rescue => e
+  puts "Game Crashed :("
+end
+
