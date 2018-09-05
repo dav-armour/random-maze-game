@@ -76,7 +76,6 @@ print maze
 ## Acknowledgments:
 - Marcin Kulik and other contributors who made the rainbow ruby gem.
 
-
 ### Difficulty Menu
 ![Image of Difficulty Menu](http://i67.tinypic.com/29yqiph.png)
 ### Easy Maze
@@ -131,9 +130,21 @@ Wrote down structure needed for each class and layout of maze.
 ![Image of planning stage 3](http://i65.tinypic.com/295bi1v.jpg)
 ![Image of planning stage 4](http://i67.tinypic.com/15n8514.jpg)
 
+
+## Testing
+Used Rspec for testing. Created multiple tests for each model to ensure proper functioning. Also ran repeated user tests while creating the app so that we could find issues as we went.
+![Image of rspec tests](http://i65.tinypic.com/2na5i0i.png)
+
 ## Ethical Issues:
 - Taking over the world and destroying lives because it is so addictive.
+- Excessive playing of this game may result in negative emotional, social and relational consequences.
 - [Addiction Help](https://www.psychguides.com/guides/video-game-addiction-symptoms-causes-and-effects/)
+
+## Accessibility Requirements:
+- Game requires ability to give input with keyboard
+- Game uses default terminal colour for displaying maze and menu options. Can change your default terminal colour if colour blindness is an issue.
+- Game does not require the use of sound.
+- Unfortunately game would not work for people with vision problems as text to speech for this kind of game would not be possible.
 
 ## Challenges:
 - The hardest part was the random maze generation.
@@ -141,3 +152,6 @@ Wrote down structure needed for each class and layout of maze.
 - Finding out how to use the arrow keys.
 - Making the player icon unable to move through the walls.
 
+## Future Goals:
+- Finish stretch goals.
+- Add server backend to store leaderboard on web
