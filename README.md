@@ -2,9 +2,24 @@
 
 ### By David Armour and Tyson Hofstetter
 
+![Image of Easy Maze](http://i68.tinypic.com/357ewpi.png)
+
 Link to Git Repository: [GitHub](https://github.com/dav-armour/random-maze-game)
 
-The Random Maze Game is a application designed to prevent boredom by entertaining the user. The application does this by randomly generating a maze, that the user must quickly navigate through in order to get a score. The faster the user can find their way through the maze, the higher the score they shall recieve. The maze has diffent difficulty levels, designed for players of all ages. The difficulty level changes the size of the maze, so if the user finds the maze to easy or to difficult they can simply change the difficulty level to suit their needs.
+## Requirements:
+Ruby 2.5.0 [how to install](https://www.ruby-lang.org/en/documentation/installation/)
+Rainbow Gem:
+```
+gem install rainbow
+```
+## Run Game
+- To run the game navigate in terminal to the random-maze-game folder.
+- Navigate into the src folder.
+- enter 'ruby game.rb' into terminal.
+- Play game.
+
+## Game Description
+The Random Maze Game is a Ruby terminal application designed to prevent boredom by entertaining the user. The application does this by randomly generating a maze, that the user must quickly navigate through in order to get a score. The faster the user can find their way through the maze, the higher the score they shall recieve. The maze has diffent difficulty levels, designed for players of all ages. The difficulty level changes the size of the maze, so if the user finds the maze to easy or to difficult they can simply change the difficulty level to suit their needs.
 
 ## Instructions For Use:
 
@@ -13,8 +28,23 @@ The Random Maze Game is a application designed to prevent boredom by entertainin
 - Once you reach the end of the maze another menu screen will appear. This screen will tell how fast you made it through the maze and will also give you a score. However if the player does not reach the end of the maze before time limit runs out the player will recieve a score of 0. The time limit is 20 seconds on Easy, 30 seconds on Medium and 40 seconds on Hard.
 - On this screen there will also be 3 options for you to choose. Pressing "1" will recreate the maze at the current difficulty level. Pressing "2" will bring you back to the first option menu where you can change your difficuly level. Pressing "3" will exit the game.
 
+Files:
+- game.rb
+  - Main application file that controls game logic.
+- maze.rb
+  - Model used for maze creation.
+- cell.rb
+ - Model for each individual cell, stores position and available directions.
+- player.rb
+  - Model used for player icon and movement.
+- menu.rb
+  - Model used for the game menus.
+
+
+
 ![Image of Difficulty Menu](http://i67.tinypic.com/29yqiph.png)
 ![Image of Easy Maze](http://i68.tinypic.com/357ewpi.png)
 ![Image of Medium Maze](http://i68.tinypic.com/2napct1.png)
 ![Image of Hard Maze](http://i67.tinypic.com/2lu2ps4.png)
 ![Image of Result Menu](http://i65.tinypic.com/nmntqq.png)
+![User App Workflow Diagram] (http://i63.tinypic.com/f3hxzp.jpg)

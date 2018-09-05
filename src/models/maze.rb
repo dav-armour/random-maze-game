@@ -1,5 +1,5 @@
 require_relative 'cell'
-require 'rainbow'
+# require 'rainbow'
 # Class used to create new maze
 class Maze
   attr_accessor :width, :height, :cells
@@ -189,11 +189,7 @@ class Maze
     @vert_walls = Array.new(@width) { Array.new(@height) { true } }
     # Remove finish wall
     @horiz_walls[-1][-1] = false
-    # Remove walls for testing
-    # @vert_walls[5][7] = false
-    # @horiz_walls[7][1] = false
   end
-
 end
 
 

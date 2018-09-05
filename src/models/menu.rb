@@ -12,7 +12,6 @@ class Menu
   end
 
   def display_menu
-
     # Return if nothing to display
     return unless @header || @body || @footer
     # Change left to ljust etc.
