@@ -102,11 +102,11 @@ class Game
   def get_score(time_taken, difficulty)
     case difficulty
     when :easy
-      time_differnce =  20 - time_taken
-    when :medium
       time_differnce =  30 - time_taken
+    when :medium
+      time_differnce =  60 - time_taken
     when :hard
-      time_differnce =  40 - time_taken
+      time_differnce =  90 - time_taken
     end
     # Make score 0 if player took too long to finish
     time_differnce <= 0 ? 0 : time_differnce * 50
@@ -164,7 +164,7 @@ class Game
   end
 
   # Uses Menu Class to create all game menus that will be used
-  # Add all created menus to class variable @menus so they can be used throughout game
+  # Add all created menus to class variable @menus so they can be used elsewhere
   def create_menus
     # Difficulty Menu
     header_text = 'Random Maze Game'
@@ -178,7 +178,7 @@ class Game
     difficulty_menu.border_color = :green
     @menus[:difficulty_menu] = difficulty_menu
 
-    #Results Menu
+    # Result Menu
     body_text = "-" # Gets filled in later when player finishes maze
     body_choices = ['Restart Maze', 'Change Difficulty', 'Exit']
     body = {text: body_text, choices: body_choices, color: :white }
@@ -203,4 +203,3 @@ begin
 rescue => e
   puts "Game Crashed :("
 end
-
