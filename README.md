@@ -42,6 +42,34 @@ The Random Maze Game is a Ruby terminal application designed to prevent boredom 
 - menu.rb
   - Model used for the game menus.
 
+## Maze Creation Algorithm
+Made use of a custom made recursive backtracker algorithm. Based on information obtained from [Wikipedia](https://en.wikipedia.org/wiki/Maze_generation_algorithm#Recursive_backtracker). Uses recursion to keep restarting the method until maze is done.
+
+```
+Maze Generation Pseudo Code:
+stack = empty array
+Starting cell = random x, y
+x, y = starting cell
+
+method x,y
+  mark current cell as visited
+  choices = unvisited surrounding cells
+  if no choices:
+    if stack empty:
+      MAZE DONE - exit recursion
+    set x, y to previous cell (pop from stack)
+    restart method
+  randomly choose one cell from choices
+  set x, y = chosen cell
+  add chosen direction to current cell's available directions
+  add opposite direction to new cell's available directions
+  push current cell onto stack
+  remove wall between current cell and chosen cell
+  restart method
+
+print maze
+```
+
 ## Built With:
 - Visual Studio Code.
 
@@ -65,7 +93,7 @@ The Random Maze Game is a Ruby terminal application designed to prevent boredom 
 ## Project Plan & Timeline:
 Used Trello to keep track of progress.
 [Link to trello board](https://trello.com/b/GvRqDfbp/random-maze-generator)
-### Start of Day 1
+  ### Start of Day 1
 ![Image of trello board at start of day 1](http://i63.tinypic.com/2zf07qx.png)
 - Day 1:
   - Worked on randomly generating the maze.
