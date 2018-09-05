@@ -8,10 +8,12 @@ Link to Git Repository: [GitHub](https://github.com/dav-armour/random-maze-game)
 
 ## Requirements:
 Ruby 2.5.0 [how to install](https://www.ruby-lang.org/en/documentation/installation/)
-Rainbow Gem:
+Rainbow Gem v3.0.0:
 ```
 gem install rainbow
 ```
+Screen size: 1440 x 900 for hard difficulty.
+
 ## How to Run the Game:
 - Download this Git repository.
 - Navigate in terminal to the random-maze-game folder.
@@ -19,7 +21,7 @@ gem install rainbow
 - enter 'ruby game.rb' into terminal.
 - Play game.
 
-## Game Description
+## Game Description:
 The Random Maze Game is a Ruby terminal application designed to prevent boredom by entertaining the user. The application does this by randomly generating a maze, that the user must quickly navigate through in order to get a score. The faster the user can find their way through the maze, the higher the score they shall recieve. The maze has diffent difficulty levels, designed for players of all ages. The difficulty level changes the size of the maze, so if the user finds the maze to easy or to difficult they can simply change the difficulty level to suit their needs.
 
 ## Instructions For Use:
@@ -61,30 +63,50 @@ The Random Maze Game is a Ruby terminal application designed to prevent boredom 
 - App User Workflow Diagram
 
 ## Project Plan & Timeline:
-Used Trello to keep track of progress
+Used Trello to keep track of progress.
+[Link to trello board](https://trello.com/b/GvRqDfbp/random-maze-generator)
 ![Image of trello board at start of day 1](http://i63.tinypic.com/2zf07qx.png)
 - Day 1:
   - Worked on randomly generating the maze.
   - Worked on player class and player movement.
   - Figured out how to use arrow keys to move player.
-![Image of trello board at start of day 1](http://i66.tinypic.com/dsajp.png)
+![Image of trello board at start of day 2](http://i66.tinypic.com/dsajp.png)
 - Day 2:
   - Worked on making the players score.
   - Worked timer for game.
   - Worked on game menus.
   - Worked on difficulty levels.
-
   - Complete documentation and slide show
+![Image of trello board at start of day 3](http://i64.tinypic.com/35i4x04.png)
 
-## Ideas List:
+## Planning & Design:
+Conducted brainstorming session to come up wit app ideas.
+### Ideas List:
 •	Game menu
 •	Player score.
 •	Timer
 •	Difficulty levels
 
-Stretch Goals:
+### Stretch Goals:
 •	Leader board
 •	Show solution
 •	Save level
 •	User names
+
+### Planning code structure
+Wrote down structure needed for each class and layout of maze.
+![Image of planning stage 1](http://i64.tinypic.com/33w3ali.jpg)
+![Image of planning stage 2](http://i65.tinypic.com/27y37rm.jpg)
+![Image of planning stage 3](http://i67.tinypic.com/98djx5.jpg)
+![Image of planning stage 4](http://i68.tinypic.com/al6de9.jpg)
+
+## Ethical Issues:
+- Taking over the world and destroying lives because it is so addictive.
+- [Addiction Help](https://www.psychguides.com/guides/video-game-addiction-symptoms-causes-and-effects/)
+
+## Challenges:
+- The hardest part was the random maze generation.
+- Fixing our endless recursion nightmare.
+- Finding out how to use the arrow keys.
+- Making the player icon unable to move through the walls.
 
