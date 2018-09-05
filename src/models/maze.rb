@@ -1,10 +1,22 @@
 require_relative 'cell'
+require 'rainbow'
 # Class used to create new maze
 class Maze
   attr_accessor :width, :height, :cells
-  def initialize(width = 10, height = 10)
-    @width = width
-    @height = height
+  # PICON = Rainbow('*').red
+  PICON = '*'
+  def initialize(difficulty)
+    case difficulty
+    when :easy
+      @width = 10
+      @height = 10
+    when :medium
+      @width = 15
+      @height = 15
+    when :hard
+      @width = 20
+      @height = 20
+    end
     # Empty stack used for maze creation
     @stack = []
     create_walls
@@ -22,7 +34,7 @@ class Maze
       for col in 0...@width
         # Add player symbol
         if col == player.x && row == player.y
-          output += @vert_walls[col][row] ? ' * |' : ' *  '
+          output += @vert_walls[col][row] ? " #{PICON} |" : " #{PICON}  "
         else
           output += @vert_walls[col][row] ? '   |' : '    '
         end

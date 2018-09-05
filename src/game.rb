@@ -10,16 +10,23 @@ class Game
 
   def initialize
     @menus = {}
-    system 'clear'
+    @player = Player.new
     create_menus
+    # system 'clear'
     # @menus[:difficulty_menu].display_menu
     # @menus[:result_menu].display_menu
     # @menus[:maze_menu].display_menu
   end
 
-  def run(difficulty = :easy)
-    @maze = Maze.new
-    @player = Player.new
+  def run
+    system 'clear'
+    @menus[:difficulty_menu].display_menu
+    get_menu_input('difficulty')
+  end
+
+  def start_maze(difficulty)
+    puts "here"
+    @maze = Maze.new(difficulty)
     start_time = Time.now.to_i
     while true
       system 'clear'
@@ -28,15 +35,14 @@ class Game
       end_y = @maze.height - 1
       # Check if they have reached the finish
       if position == [end_x, end_y]
+        # Reset position
+        @player.x = 0
+        @player.y = 0
         break
       end
-      # p @menus[:maze_menu]
-      @menus[:maze_header].display_menu
-      print_maze(@player)
-      # puts @maze.to_s(@player).center(100)
-      @menus[:maze_footer].display_menu
-
-      menu = get_input
+      # Prints out maze with current player position
+      print_maze
+      menu = get_maze_input
 
       break if menu
       # puts "Current position X: #{player.xpos}, Y: #{player.ypos}"
@@ -44,34 +50,63 @@ class Game
     end_time = Time.now.to_i
     time_taken = end_time - start_time
     score = get_score(time_taken, difficulty)
-    puts "Your time bonus is #{score}!"
+    body_text = "Congratulations you finished the maze!\n-\n"
+    body_text += "You made it throught the maze in #{time_taken} seconds!\n-\n"
+    body_text += "Your score is #{score}!\n-"
+    @menus[:result_menu].body[:text] = body_text
+    @menus[:result_menu].display_menu
+    get_menu_input('result', difficulty)
   end
 
-  def print_maze(player)
+  # Print out maze with header and footer
+  def print_maze
+    @menus[:maze_header].display_menu
+    print Rainbow('|').green
+    print Rainbow("Use arrow keys or WASD to move.".center(98)).blue
+    print Rainbow("|\n").green
     puts Rainbow('|' + ' '.center(98) + '|').green
-    @maze.to_s(player).split("\n").each do |line|
+    @maze.to_s(@player).split("\n").each do |line|
       print Rainbow('|').green
       print line.center(98)
       print Rainbow("|\n").green
     end
     puts Rainbow('|' + ' '.center(98) + '|').green
+    @menus[:maze_footer].display_menu
   end
 
   def get_score(time_taken, difficulty)
     #Calculate score
     case difficulty
     when :easy
-      time_differnce =  15 - time_taken
-    when :medium
-      time_differnce =  15 - time_taken
-    when :hard
       time_differnce =  20 - time_taken
+    when :medium
+      time_differnce =  30 - time_taken
+    when :hard
+      time_differnce =  40 - time_taken
     end
     time_bonus = time_differnce <= 0 ? 0 : time_differnce * 50
     time_bonus
   end
 
-  def get_input()
+  def get_menu_input(menu, cur_difficulty =  nil)
+    char = STDIN.getch
+    p char
+    case char
+    when '1'
+      menu == 'difficulty' ? start_maze(:easy) : start_maze(cur_difficulty)
+    when '2'
+      menu == 'difficulty' ? start_maze(:medium) : run
+    when '3'
+      menu == 'difficulty' ? start_maze(:hard) : exit
+    # Ctrl - C to exit game
+    when "\u0003", "q"
+      exit
+    else
+      get_menu_input(menu)
+    end
+  end
+
+  def get_maze_input()
     char = STDIN.getch
     # Check if special character entered (arrow keys)
     if char == "\e"
@@ -120,7 +155,7 @@ class Game
     @menus[:difficulty_menu] = difficulty_menu
 
     #Results Menu
-    body_text = "Congratulations you finished the maze.\n-\n"
+    body_text = "Congratulations you finished the maze!\n-\n"
     body_text += "You made it throught the maze in 5 seconds!\n-\n"
     body_text += "Your score is 300!\n-"
     body_text += "\nPlease choose an option:\n"
