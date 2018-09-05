@@ -3,8 +3,8 @@ require 'rainbow'
 # Class used to create new maze
 class Maze
   attr_accessor :width, :height, :cells
-  # PICON = Rainbow('*').red
-  PICON = '*'
+  # PICON = Rainbow('P').red # Doesn't work :(
+  PICON = 'P'
   def initialize(difficulty)
     case difficulty
     when :easy

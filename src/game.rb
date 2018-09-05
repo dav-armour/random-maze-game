@@ -25,7 +25,7 @@ class Game
   end
 
   def start_maze(difficulty)
-    puts "here"
+    # puts "here"
     @maze = Maze.new(difficulty)
     start_time = Time.now.to_i
     while true
@@ -62,7 +62,7 @@ class Game
   def print_maze
     @menus[:maze_header].display_menu
     print Rainbow('|').green
-    print Rainbow("Use arrow keys or WASD to move.".center(98)).blue
+    print Rainbow("Use Arrow or WASD keys to move.".center(98)).blue
     print Rainbow("|\n").green
     puts Rainbow('|' + ' '.center(98) + '|').green
     @maze.to_s(@player).split("\n").each do |line|
@@ -89,8 +89,8 @@ class Game
   end
 
   def get_menu_input(menu, cur_difficulty =  nil)
-    char = STDIN.getch
-    p char
+    char = STDIN.noecho(&:getch)
+    # p char
     case char
     when '1'
       menu == 'difficulty' ? start_maze(:easy) : start_maze(cur_difficulty)
@@ -102,12 +102,13 @@ class Game
     when "\u0003", "q"
       exit
     else
+      # puts "Wrong input entered"
       get_menu_input(menu)
     end
   end
 
   def get_maze_input()
-    char = STDIN.getch
+    char = STDIN.noecho(&:getch)
     # Check if special character entered (arrow keys)
     if char == "\e"
       # Retrieve rest of special character
