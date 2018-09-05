@@ -108,7 +108,7 @@ class Menu
     string.strip.split("\n")
   end
 
-
+  # Sets alignment type to proper method name
   def align_to_method!
     @header[:align] = method_name(@header[:align]) if @header
     if @body
