@@ -12,6 +12,10 @@ Rainbow Gem v3.0.0:
 ```
 gem install rainbow
 ```
+RSpec v3.8.0 (only needed for running tests)
+```
+gem install rspec
+```
 Screen size: 1440 x 900 for hard difficulty.
 
 ## How to Run the Game:
@@ -21,8 +25,20 @@ Screen size: 1440 x 900 for hard difficulty.
 - enter 'ruby game.rb' into terminal.
 - Play game.
 
-## Game Description:
-The Random Maze Game is a Ruby terminal application designed to prevent boredom by entertaining the user. The application does this by randomly generating a maze, that the user must quickly navigate through in order to get a score. The faster the user can find their way through the maze, the higher the score they shall recieve. The maze has diffent difficulty levels, designed for players of all ages. The difficulty level changes the size of the maze, so if the user finds the maze to easy or to difficult they can simply change the difficulty level to suit their needs.
+## Purpose:
+The Random Maze Game is a Ruby terminal application designed to prevent boredom by entertaining the user. This engages the users problem solving skills and increases their ability to think many moves ahead. The game does this by randomly generating a maze, that the user must quickly navigate through in order to get a score. The faster the user can find their way through the maze, the higher the score they shall recieve. This game is designed for players of all ages.
+
+## Functionality
+- Multiple difficulty levels that change the size of the maze
+- Score based on difficulty and how fast the maze is completed
+- Ability to restart maze at current difficulty or select a different difficulty
+
+#### Planned future functionality:
+- Support login for saving data of multiple players
+- Show leader board of top players
+- Save current maze so that it can be resumed later
+- Show maze solution
+- External server to store leaderboard
 
 ## Instructions For Use:
 - To begin playing The Random Maze Game simply select a difficulty level by selecting either "1" for Easy, "2" for Medium, or "3" for Hard. Selecting a difficulty level will bring up the maze.
@@ -45,8 +61,8 @@ The Random Maze Game is a Ruby terminal application designed to prevent boredom 
 ## Maze Creation Algorithm
 Made use of a custom made recursive backtracker algorithm. Based on information obtained from [Wikipedia](https://en.wikipedia.org/wiki/Maze_generation_algorithm#Recursive_backtracker). Uses recursion to keep restarting the method until maze is done.
 
+#### Maze Generation Pseudo Code:
 ```
-Maze Generation Pseudo Code:
 stack = empty array
 Starting cell = random x, y
 x, y = starting cell
@@ -133,6 +149,11 @@ Wrote down structure needed for each class and layout of maze.
 
 ## Testing
 Used Rspec for testing. Created multiple tests for each model to ensure proper functioning. Also ran repeated user tests while creating the app so that we could find issues as we went.
+
+To run rspec tests:
+- Navigate in terminal to the random-maze-game folder.
+- Navigate into the src folder.
+- enter 'rspec' into terminal.
 ![Image of rspec tests](http://i65.tinypic.com/2na5i0i.png)
 
 ## Ethical Issues:
@@ -151,7 +172,3 @@ Used Rspec for testing. Created multiple tests for each model to ensure proper f
 - Fixing our endless recursion nightmare.
 - Finding out how to use the arrow keys.
 - Making the player icon unable to move through the walls.
-
-## Future Goals:
-- Finish stretch goals.
-- Add server backend to store leaderboard on web
