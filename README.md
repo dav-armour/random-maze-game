@@ -36,9 +36,9 @@ The Random Maze Game is a Ruby terminal application designed to prevent boredom 
 - maze.rb
   - Model used for maze creation.
 - cell.rb
- - Model for each individual cell, stores position and available directions.
+  - Model for each individual cell, stores position and available directions.
 - player.rb
-  - Model used for player icon and movement.
+  - Model used for player position and movement.
 - menu.rb
   - Model used for the game menus.
 
@@ -49,27 +49,29 @@ The Random Maze Game is a Ruby terminal application designed to prevent boredom 
 - Marcin Kulik and other contributors who made the rainbow ruby gem.
 
 
+### Difficulty Menu
 ![Image of Difficulty Menu](http://i67.tinypic.com/29yqiph.png)
-- Difficulty Menu
+### Easy Maze
 ![Image of Easy Maze](http://i68.tinypic.com/357ewpi.png)
-- Easy Maze
+### Medium Maze
 ![Image of Medium Maze](http://i68.tinypic.com/2napct1.png)
-- Medium Maze
+### Hard Maze
 ![Image of Hard Maze](http://i67.tinypic.com/2lu2ps4.png)
-- Hard Maze
+### Results Menu
 ![Image of Result Menu](http://i65.tinypic.com/nmntqq.png)
-- Results Menu
+### App User Workflow Diagram
 ![User App Workflow Diagram](http://i63.tinypic.com/f3hxzp.jpg)
-- App User Workflow Diagram
 
 ## Project Plan & Timeline:
 Used Trello to keep track of progress.
 [Link to trello board](https://trello.com/b/GvRqDfbp/random-maze-generator)
+### Start of Day 1
 ![Image of trello board at start of day 1](http://i63.tinypic.com/2zf07qx.png)
 - Day 1:
   - Worked on randomly generating the maze.
   - Worked on player class and player movement.
   - Figured out how to use arrow keys to move player.
+  ### Start of Day 2
 ![Image of trello board at start of day 2](http://i66.tinypic.com/dsajp.png)
 - Day 2:
   - Worked on making the players score.
@@ -77,28 +79,29 @@ Used Trello to keep track of progress.
   - Worked on game menus.
   - Worked on difficulty levels.
   - Complete documentation and slide show
-![Image of trello board at start of day 3](http://i64.tinypic.com/35i4x04.png)
+  ### End of Day 2
+![Image of trello board at end of day 2](http://i64.tinypic.com/35i4x04.png)
 
 ## Planning & Design:
-Conducted brainstorming session to come up wit app ideas.
+Conducted brainstorming session to come up with app ideas.
 ### Ideas List:
-•	Game menu
-•	Player score.
-•	Timer
-•	Difficulty levels
+- Game menu
+- Player score
+- Timer
+- Difficulty levels
 
 ### Stretch Goals:
-•	Leader board
-•	Show solution
-•	Save level
-•	User names
+- Leader board
+- Show solution
+- Save level
+- User names
 
 ### Planning code structure
 Wrote down structure needed for each class and layout of maze.
-![Image of planning stage 1](http://i64.tinypic.com/33w3ali.jpg)
-![Image of planning stage 2](http://i65.tinypic.com/27y37rm.jpg)
-![Image of planning stage 3](http://i67.tinypic.com/98djx5.jpg)
-![Image of planning stage 4](http://i68.tinypic.com/al6de9.jpg)
+![Image of planning stage 1](http://i67.tinypic.com/28a6xiq.jpg)
+![Image of planning stage 2](http://i68.tinypic.com/212ybet.jpg)
+![Image of planning stage 3](http://i65.tinypic.com/295bi1v.jpg)
+![Image of planning stage 4](http://i67.tinypic.com/15n8514.jpg)
 
 ## Ethical Issues:
 - Taking over the world and destroying lives because it is so addictive.
