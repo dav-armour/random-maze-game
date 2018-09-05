@@ -1,5 +1,6 @@
+Maze Generation Pseudo Code:
 stack = empty array
-Starting cell = 0, 0
+Starting cell = random x, y
 x, y = starting cell
 
 method x,y
