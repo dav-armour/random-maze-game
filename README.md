@@ -8,6 +8,7 @@ Link to Git Repository: [GitHub](https://github.com/dav-armour/random-maze-game)
 
 ## Requirements:
 Ruby 2.5.0 [how to install](https://www.ruby-lang.org/en/documentation/installation/)
+
 Rainbow Gem v3.0.0:
 ```
 gem install rainbow
@@ -22,7 +23,7 @@ Screen size: 1440 x 900 for hard difficulty.
 - Download this Git repository.
 - Navigate in terminal to the random-maze-game folder.
 - Navigate into the src folder.
-- enter 'ruby game.rb' into terminal.
+- Enter 'ruby game.rb' into terminal.
 - Play game.
 
 ## Purpose:
@@ -153,7 +154,7 @@ Used Rspec for testing. Created multiple tests for each model to ensure proper f
 To run rspec tests:
 - Navigate in terminal to the random-maze-game folder.
 - Navigate into the src folder.
-- enter 'rspec' into terminal.
+- Enter 'rspec' into terminal.
 ![Image of rspec tests](http://i65.tinypic.com/2na5i0i.png)
 
 ## Ethical Issues:
