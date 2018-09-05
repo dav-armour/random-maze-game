@@ -29,8 +29,6 @@ class Menu
       display_footer
       print_line_break
     end
-
-
   end
 
   def display_header
@@ -47,7 +45,7 @@ class Menu
     print_text(@footer[:text], @footer[:align], @footer[:color])
   end
 
-  # private
+  private
 
   def print_text(text, align, color, choices: false)
     color = 0 if color.nil?
@@ -55,7 +53,7 @@ class Menu
     align = 'center' if align.nil?
     # Split for normal text not for choices
     lines = choices ? text.dup : text.split("\n")
-    # Wrap words or text that is too long
+    # Wrap words for text that is too long
     lines.map! { |line| word_wrap(line) }
     lines.flatten!
     # Check for longest line to allow for grouped alignment
@@ -71,20 +69,26 @@ class Menu
     end
   end
 
+  # Prints out numbered list of choices
   def print_choices(choices, align, color)
     test = choices
     print_text(test, align, color, choices: true) unless choices.nil?
   end
 
+  # Prints line break in between each section (header/body/footer)
   def print_line_break
     puts Rainbow('+' + '-' * (@width + 2) + '+').color(border_color)
   end
 
+  # Splits lines and text that are too long
   def word_wrap(text)
     lines = text.split("\n")
     string = ''
+    # Loop through each line and split it up if needed
     lines.each do |line|
+      # space_left used to keep track of how much space left in line
       space_left = @width
+      # Loop through each word to check for super long words
       line.split.each do |word|
         if word.length + 1 > space_left
           string += "\n"
@@ -104,6 +108,7 @@ class Menu
     string.strip.split("\n")
   end
 
+
   def align_to_method!
     @header[:align] = method_name(@header[:align]) if @header
     if @body
@@ -113,6 +118,7 @@ class Menu
     @footer[:align] = method_name(@footer[:align]) if @footer
   end
 
+  # Changes to correct method name for alignment
   def method_name(input = nil)
     return if input.nil?
     case input

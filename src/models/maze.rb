@@ -1,11 +1,11 @@
 require_relative 'cell'
-# require 'rainbow'
 # Class used to create new maze
 class Maze
   attr_accessor :width, :height, :cells
-  # PICON = Rainbow('P').red # Doesn't work :(
   PICON = 'P'
+  # PICON = Rainbow('P').red # Doesn't work :(
   def initialize(difficulty)
+    # Set width and height based on difficulty
     case difficulty
     when :easy
       @width = 10
@@ -44,38 +44,37 @@ class Maze
       for col in 0...@width
         output += @horiz_walls[col][row] ? '---+' : '   +'
       end
-      output += "\n"
+      output += "\n" # End of row
     end
     output
   end
 
-  # Generates a new maze starting from pos 0, 0
+  # Generates a new maze starting from random location
   def generate_maze
+    # Randomises generator start location
+    x = rand(@width)
+    y = rand(@height)
     # Put starting cell onto stack
-    @stack << @cells[0][0]
-    create_path_from(0, 0)
+    @stack << @cells[x][y]
+    create_path_from(x, y)
   end
 
   private
 
+  # Recursive backtracker algorithm to create maze
   def create_path_from(x, y)
     # Maze done when stack is empty
     return if @stack.empty?
     # Mark current cell as visited
     @cells[x][y].visited = true
     choices = get_choices(x, y)
-    # puts "X: #{@cells[x][y].x}, Y: #{@cells[x][y].y}"
-    # puts "X: #{x}, Y: #{y}"
-    # p choices
     # Return to previous cell if all surrounding cells have been visited
     if choices.length == 0
-      # puts "here"
       prev_cell = @stack.pop
       create_path_from(prev_cell.x, prev_cell.y)
     else
       # Randomly choose direction
       choice = choices[rand(choices.length)]
-      # p choice
       new_x, new_y = get_next_cell_pos(choice, x, y)
       # Tell current cell and new cell they can now move in chosen direction
       @cells[x][y].available_directions << choice
@@ -84,34 +83,27 @@ class Maze
       @stack << @cells[x][y]
       # Remove wall between current cell and chosen cell
       remove_wall(x, y, choice)
-      # puts "here"
       # Restart method with new position
       create_path_from(new_x, new_y)
     end
   end
 
+  # Remove wall between current cell and chosen direction
   def remove_wall(x, y, choice)
-    # p choice
-    # puts "Pos-: #{x}, #{y}"
     case choice
     when "N"
-      # puts "removing wall @ pos: #{x},#{y-1}"
       @horiz_walls[x][y-1] = false
     when "S"
-      # puts "removing wall @ pos: #{x},#{y}"
       @horiz_walls[x][y] = false
     when "E"
-      # puts "removing wall @ pos: #{x},#{y}"
       @vert_walls[x][y] = false
     when "W"
-      # puts "removing wall @ pos: #{x-1},#{y}"
       @vert_walls[x-1][y] = false
     end
   end
 
+  # Calculates new x, y coordinates for chosen direction
   def get_next_cell_pos(choice, x, y)
-    # puts "OLD: X: #{x}, OLD Y: #{y}"
-    # p choice
     case choice
     when "N"
       y -= 1
@@ -122,10 +114,10 @@ class Maze
     when "W"
       x -= 1
     end
-    # puts "New: X: #{x}, New Y: #{y}"
     [x, y]
   end
 
+  # Returns opposite direction
   def opposite(choice)
     case choice
     when "N"
@@ -179,9 +171,9 @@ class Maze
         @cells[x][y] = Cell.new(x, y)
       end
     end
-    # p @cells
   end
 
+  # Creates array to store all walls and sets to true
   def create_walls
     # Create 2d array of all horizontal walls and set all to true
     @horiz_walls = Array.new(@width) { Array.new(@height) { true } }

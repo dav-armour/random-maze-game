@@ -63,11 +63,14 @@ class Game
   def show_result(time_taken, difficulty)
     # Retrieve score based on time taken and difficulty
     score = get_score(time_taken, difficulty)
+    # Add text to result menu
     body_text = "Congratulations you finished the maze!\n-\n"
     body_text += "You made it throught the maze in #{time_taken} seconds!\n-\n"
     body_text += "Your score is #{score}!\n-"
     @menus[:result_menu].body[:text] = body_text
+    # Show result menu
     @menus[:result_menu].display_menu
+
     get_menu_input('result', difficulty)
   end
 
@@ -110,6 +113,7 @@ class Game
     # Returns score
   end
 
+  # Controls what happens when each button is pressed at menus
   def get_menu_input(menu, cur_difficulty =  nil)
     # Get single character (without showing on screen)
     char = STDIN.noecho(&:getch)
@@ -121,8 +125,9 @@ class Game
     when '3'
       menu == 'difficulty' ? start_maze(:hard) : exit
     # Q or Ctrl - C to exit game
-    when "\u0003", "q"
+    when "\u0003", "q", "Q"
       exit
+    # Repeat if unwanted button pressed
     else
       get_menu_input(menu, cur_difficulty)
     end
@@ -141,16 +146,16 @@ class Game
     # Check what key was entered
     case char
     # Makes WASD and arrow keys move player
-    when 'w', "\e[A" # Up arrow
+    when 'w', "W", "\e[A" # Up arrow
       @player.move_north(@maze)
-    when 's', "\e[B" # Down arrow
+    when 's', "S", "\e[B" # Down arrow
       @player.move_south(@maze)
-    when 'd', "\e[C" # Right arrow
+    when 'd', "D", "\e[C" # Right arrow
       @player.move_east(@maze)
-    when 'a', "\e[D" # Left arrow
+    when 'a', "A", "\e[D" # Left arrow
       @player.move_west(@maze)
     # Q or Ctrl - C to exit game
-    when "\u0003", "q"
+    when "\u0003", "q", "Q"
       exit
     # Repeat if unwanted button pressed
     else
@@ -190,7 +195,12 @@ class Game
     maze_footer.border_color = :green
     @menus[:maze_footer] = maze_footer
   end
-
 end
 
-Game.new.run
+# Starts game
+begin
+  Game.new.run
+rescue => e
+  puts "Game Crashed :("
+end
+
