@@ -163,7 +163,7 @@ To run rspec tests:
 - [Addiction Help](https://www.psychguides.com/guides/video-game-addiction-symptoms-causes-and-effects/)
 
 ## Accessibility Requirements:
-- Game requires ability to give input with keyboard
+- Game requires ability to give input with keyboard.
 - Game uses default terminal colour for displaying maze and menu options. Can change your default terminal colour if colour blindness is an issue.
 - Game does not require the use of sound.
 - Unfortunately game would not work for people with vision problems as text to speech for this kind of game would not be possible.
